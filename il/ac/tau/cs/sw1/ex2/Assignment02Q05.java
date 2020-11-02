@@ -18,23 +18,23 @@ public class Assignment02Q05 {
 		int[][] rotatedMatrix; // the rotated matrix
 		
 		// your code goes here below
-		int row=0;
-		int col=0;
-		int numOfSteps = 0;
-		for(int i=0;i<N;i++) {
-			while(numOfSteps<N) {
-				int propagated = matrix[row][col];
-				int nextRow = N-1-col;
-				int nextCol = row;
-				matrix[row][col]=matrix[nextRow][nextCol];
-				row = nextRow;
-				col = nextCol;
-				numOfSteps++;
-			}
-			numOfSteps = 0;
-			if(++col>=N) {
-				row++;
-				col=0;
+		int propagated;
+		for(int row=0;row<(N+1)/2;row++) {
+			for(int col=row;col<N-1-row;col++) {
+				int oldRow = row;
+				int oldCol = col;
+				int newRow;
+				int newCol;
+				propagated = matrix[N-1-col][row];
+				for(int k=0;k<4;k++) {
+					int temp = matrix[oldRow][oldCol];
+					newRow = oldCol;
+					newCol = N-1-oldRow;
+					matrix[oldRow][oldCol]=propagated;
+					propagated= temp;
+					oldRow = newRow;
+					oldCol = newCol;
+				}
 			}
 		}
 		rotatedMatrix = matrix;
